@@ -1,0 +1,81 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+@Autonomous
+public class SampleAuton extends LinearOpMode {
+   DcMotorEx backLeft, backRight, frontLeft, frontRight;
+   double ticksPerRevolution = 537.6; 
+   double wheelCircumference = 11.9; 
+
+   public void runOpMode() throws InterruptedException {
+    frontLeft = hardwareMap.get(DcMotorEx.class, "fl");
+    frontRight = hardwareMap.get(DcMotorEx.class, "fr");
+    backLeft = hardwareMap.get(DcMotorEx.class, "bl");
+    backRight = hardwareMap.get(DcMotorEx.class, "br");
+
+    frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    frontLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+    frontLeft.setDirection(DcMotorEx.Direction.REVERSE);
+    backLeft.setDirection(DcMotorEx.Direction.REVERSE);
+
+    waitForStart();
+    
+    driveForward(24);
+    driveLeft(24);
+    driveBackward(24);
+    driveBackward(24);
+    }
+    
+   public void runToPosition() {
+    frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    }
+    
+   public int inchesToTicks (int inches) {
+       int ticks = (int) (inches * ticksPerRevolution / wheelCircumference);
+       return ticks;
+    }
+
+  public void driveForward (int inches) {
+         int ticks = inchesToTicks(inches);
+         frontLeft.setTargetPosition(ticks);
+         frontRight.setTargetPosition(ticks);
+         backLeft.setTargetPosition(ticks);
+         backRight.setTargetPosition(ticks);
+         runToPosition();
+     }
+  public void driveBackward (int inches) {
+         int ticks = inchesToTicks(inches);
+         frontLeft.setTargetPosition(-ticks);
+         frontRight.setTargetPosition(-ticks);
+         backLeft.setTargetPosition(-ticks);
+         backRight.setTargetPosition(-ticks);
+         runToPosition();
+     }
+
+  public void driveLeft (int inches) {
+         int ticks = inchesToTicks(inches);
+         frontLeft.setTargetPosition(-ticks);
+         frontRight.setTargetPosition(ticks);
+         backLeft.setTargetPosition(ticks);
+         backRight.setTargetPosition(-ticks);
+         runToPosition();
+     }
+
+  public void driveRight(int inches) {
+         int ticks = inchesToTicks(inches);
+         frontLeft.setTargetPosition(ticks);
+         frontRight.setTargetPosition(-ticks);
+         backLeft.setTargetPosition(-ticks);
+         backRight.setTargetPosition(ticks);
+         runToPosition();
+     }
+}
