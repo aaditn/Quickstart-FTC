@@ -26,6 +26,7 @@ public class SampleAuton extends LinearOpMode {
 
     waitForStart();
     
+    setPowerAll(0.5);
     driveForward(24);
     driveLeft(24);
     driveBackward(24);
@@ -77,5 +78,13 @@ public class SampleAuton extends LinearOpMode {
          backLeft.setTargetPosition(-ticks);
          backRight.setTargetPosition(ticks);
          runToPosition();
-     }
+  }
+  public void setPowerAll (double power) {
+      frontLeft.setPower(power);
+      frontRight.setPower(power);
+      backLeft.setPower(power);
+      backRight.setPower(power);
+  }
+}
+      
 }
