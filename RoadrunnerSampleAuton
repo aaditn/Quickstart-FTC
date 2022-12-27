@@ -1,0 +1,23 @@
+
+
+@Autonomous
+public class TrajectoryTest extends LinearOpMode {
+
+   Trajectory test;
+
+   public void runOpMode() throws InterruptedException {
+
+       SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+       Pose2d startPose = new Pose2d(0, 0, 0);
+       
+       drive.setPoseEstimate(startPose);
+
+       test = drive.trajectoryBuilder(startPose)
+               .forward(24)
+               .build();
+
+       waitForStart();
+       
+       drive.followTrajectory(test);
+   }
